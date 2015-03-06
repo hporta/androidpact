@@ -13,6 +13,7 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore.MediaColumns;
 import android.provider.MediaStore.Images.Media;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import android.view.WindowManager;
 
 //Notre classe implémente SurfaceHolder.Callback
 public class CameraActivity extends Activity {
+	private static final String OUTPUT_FILE="/sdcard/imageoutput.jpeg";
 	private Handler myHandler;
 	private Runnable myRunnable = new Runnable(){
 		public void run() {
@@ -61,7 +63,7 @@ public class CameraActivity extends Activity {
     		SimpleDateFormat timeStampFormat = new SimpleDateFormat(
     				"yyyy-MM-dd-HH.mm.ss");
     		String fileName = "photo_" + timeStampFormat.format(new Date())
-    				+ ".jpg";
+    				+ ".jpeg";
 
     		// Metadata pour la photo
     		ContentValues values = new ContentValues();
@@ -70,6 +72,7 @@ public class CameraActivity extends Activity {
     		values.put(Media.DESCRIPTION, "Image prise par FormationCamera");
     		values.put(Media.DATE_TAKEN, new Date().getTime());
     		values.put(Media.MIME_TYPE, "image/jpeg");
+    		values.put(MediaColumns.DATA, OUTPUT_FILE);
 
     		// Support de stockage
     		Uri taken = getContentResolver().insert(Media.EXTERNAL_CONTENT_URI,

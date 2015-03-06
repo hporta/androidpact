@@ -15,6 +15,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.view.Menu;
@@ -56,9 +57,25 @@ public class AudioActivity extends ActionBarActivity {
 
         OnClickListener startListener = new OnClickListener() {
             public void onClick(View v) {
-            	
+            	Thread thread = new Thread(new Runnable(){
+            		@Override
+            		public void run()
+            		{
+            			try {
+            				Client.commande("biere brune");
+            			}
+            			
+            			catch(Exception e)
+            			{
+            				e.printStackTrace();
+            			}
+            		}
+            		
+            	});
+            	thread.start();
             	logo.startAnimation(animation);
-            	startRecording();           
+            	startRecording();   
+            	
             	}
         };
 
