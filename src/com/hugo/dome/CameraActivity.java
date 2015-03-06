@@ -1,20 +1,28 @@
 package com.hugo.dome;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.MediaColumns;
+import android.provider.MediaStore.Images.Media;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 
 //Notre classe impl�mente SurfaceHolder.Callback
 public class CameraActivity extends Activity {

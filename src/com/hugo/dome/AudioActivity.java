@@ -3,9 +3,11 @@ package com.hugo.dome;
 import java.io.File;
 import java.io.IOException;
 
+import android.R;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.animation.*;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
