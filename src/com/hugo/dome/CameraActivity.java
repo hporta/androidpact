@@ -1,5 +1,9 @@
 package com.hugo.dome;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -8,10 +12,13 @@ import java.util.Date;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore.MediaColumns;
 import android.provider.MediaStore.Images.Media;
@@ -26,7 +33,9 @@ import android.view.WindowManager;
 
 //Notre classe implémente SurfaceHolder.Callback
 public class CameraActivity extends Activity {
-	private static final String OUTPUT_FILE="/sdcard/imageoutput.jpeg";
+	private FileOutputStream out;
+	private Bitmap frame;
+	private static final String OUTPUT_FILE="/sdcard/imageoutput.jpg";
 	private Handler myHandler;
 	private Runnable myRunnable = new Runnable(){
 		public void run() {
@@ -47,8 +56,8 @@ public class CameraActivity extends Activity {
         mPreview = new Preview(this);
         mPreview.setOnClickListener(photoListener);
         setContentView(mPreview);
-        myHandler = new Handler();
-        myHandler.postDelayed(myRunnable,60000);
+        /*myHandler = new Handler();
+        myHandler.postDelayed(myRunnable,60000);*/
     }
     private OnClickListener photoListener = new OnClickListener(){
     	public void onClick(View v) {
@@ -56,14 +65,16 @@ public class CameraActivity extends Activity {
     		if (mPreview != null) {
     			SavePicture();
     		}
+            		
     	}
-    };
+    	};
     private void SavePicture() {
     	try {
-    		SimpleDateFormat timeStampFormat = new SimpleDateFormat(
-    				"yyyy-MM-dd-HH.mm.ss");
-    		String fileName = "photo_" + timeStampFormat.format(new Date())
-    				+ ".jpeg";
+    		//SimpleDateFormat timeStampFormat = new SimpleDateFormat(
+    				//"yyyy-MM-dd-HH.mm.ss");
+    		String fileName = "imageoutput.jpg";
+    				/*"photo_" + timeStampFormat.format(new Date())
+    				+ ".jpeg";*/
 
     		// Metadata pour la photo
     		ContentValues values = new ContentValues();
@@ -71,7 +82,7 @@ public class CameraActivity extends Activity {
     		values.put(Media.DISPLAY_NAME, fileName);
     		values.put(Media.DESCRIPTION, "Image prise par FormationCamera");
     		values.put(Media.DATE_TAKEN, new Date().getTime());
-    		values.put(Media.MIME_TYPE, "image/jpeg");
+    		values.put(Media.MIME_TYPE, "image/jpg");
     		values.put(MediaColumns.DATA, OUTPUT_FILE);
 
     		// Support de stockage
@@ -86,6 +97,7 @@ public class CameraActivity extends Activity {
     	} catch (Exception e) {
     		// TODO: handle exception
     	}
+    	
 
     }
     Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
@@ -113,5 +125,5 @@ public class CameraActivity extends Activity {
         if(myHandler != null)
             myHandler.removeCallbacks(myRunnable); // On arrete le callback
     }
-}
+    }
 	

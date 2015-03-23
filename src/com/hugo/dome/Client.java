@@ -18,7 +18,6 @@ public class Client {
 		
 				Socket socket;
 				PrintWriter out;
-				Audio audio= new  Audio(a);
 				
 				//System.out.println(audio.getResultReco());
 				try { socket = new Socket(InetAddress.getByName("Dynalink"),2025); // Connexion au serveur sur port 2025
@@ -27,7 +26,7 @@ public class Client {
 				      //  System.out.println(message_distant);
 				        
 				        out = new PrintWriter(socket.getOutputStream());
-				        out.println("biere brune");
+				        out.println(a);
 				        out.flush();
 			         socket.close();   // Fermeture socket
 

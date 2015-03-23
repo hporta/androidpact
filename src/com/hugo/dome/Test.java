@@ -1,17 +1,19 @@
 package com.hugo.dome;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.//import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+
+import android.os.Environment;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 
 
 public class Test {
 
-	public static void main(String[] args) {
+	private void main(String[] args){
 			
 	//Selectionner les 3 points
 		Point A=new Point(-10,0,0);
@@ -27,7 +29,7 @@ public class Test {
 		
 	//Choix des parametres
 		//Distance au cercle pour Ãªtre inliner
-		cercle.setDistanceInliners(25);
+		cercle.setDistanceInliners(25);///cercle.setDistanceInliners(25);
 				
 		//Nombre d'inliners suffisant pour arrÃªter
 		cercle.setNombreInliners(3000);
@@ -37,27 +39,34 @@ public class Test {
 		detector.setGradientLevel(500);
 		
 		//Charge l'image
-				BufferedImage frame = null;
-				try {
-					frame = ImageIO.read(new File("C://Users//Patrick//workspace//test.png"));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				Bitmap frame = null;
+					frame = BitmapFactory.decodeFile("C://Users//Patrick//workspace//test.png");
 	
 	//S'applique a  l'image
 		detector.setSourceImage(frame);
 		detector.process();
-		BufferedImage edges = detector.getEdgesImage();
+		Bitmap edges = detector.getEdgesImage();
 			
 	//Enregistre de l'image des contours
-		File outputfile1 = new File("C://Users//Patrick//workspace//Contours.png");
+		FileOutputStream out = null;
+		String filepath = Environment.getExternalStorageDirectory().getPath();
+		String filename = "contour.jpeg";
+		File file = new File(filepath, filename);
 		try {
-			ImageIO.write(edges, "png", outputfile1);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}			 
+			 out = new FileOutputStream(file);
+		    edges.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+		    // PNG is a lossless format, the compression factor (100) is ignored
+		} catch (Exception e) {
+		    e.printStackTrace();
+		} finally {
+		    try {
+		        if (out != null) {
+		            out.close();
+		        }
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
 			
 		
 	//Application de RANSAC
@@ -71,22 +80,8 @@ public class Test {
 		int y = bestCircle.circleCenter().getY();
 		int r = (int) bestCircle.radius();
 			
-	//Dessine le cercle obtenu
+	
 			
-		Graphics2D g2d = frame.createGraphics();
-		g2d.setColor(Color.RED);
-		g2d.fillOval(x-r,y-r,2*r,2*r);
-		g2d.drawImage(frame, 0, 0, null);			
-		g2d.dispose();
-			
-	//Enregistre l'image avec tracé du cercle
-		File outputfile2 = new File("C://Users//Patrick//workspace//traceDuCercle.png");
-		try {
-			ImageIO.write(frame, "png", outputfile2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 		
 }

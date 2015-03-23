@@ -104,7 +104,7 @@ public class AudioActivity extends ActionBarActivity {
         
         protected void startRecording(){
         	this.mRecorder = new MediaRecorder();
-        	this.mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        	this.mRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
             this.mRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
             //this.mRecorder.setOutputFile(this.getFilesDir().getAbsolutePath()+"/audiooutput.amr");
             this.mRecorder.setOutputFile(OUTPUT_FILE);

@@ -1,5 +1,4 @@
-//import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+package com.hugo.dome;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
@@ -17,13 +16,14 @@ public class SobelEdgeDetector {
 	private int[] data;
 	private int[] magnitude;
 	private Bitmap sourceImage;
-	private Image edgesImage;
+	private Bitmap edgesImage;
 	//private BufferedImage edgesImage;	
 	private boolean contrastNormalized;
 	
 	private int[] xGradient;
 	private int[] yGradient;
 	private float[] gradientMag;
+	private int[] pixels;
 	
 	
 	private static ArrayList<Point> listeDePoints = new ArrayList<Point>();
@@ -42,20 +42,20 @@ public class SobelEdgeDetector {
 	}
 	
 	//public BufferedImage getSourceImage() {
-	public Image getSourceImage(){
+	public Bitmap getSourceImage(){
 		return sourceImage;
 	}
 	
 
-	public void setSourceImage(Image image) {
+	public void setSourceImage(Bitmap image) {
 		sourceImage = image;
 	}
 
-	public Image getEdgesImage() {
+	public Bitmap getEdgesImage() {
 		return edgesImage;
 	}
 
-	public void setEdgesImage(Image edgesImage) {
+	public void setEdgesImage(Bitmap edgesImage) {
 		this.edgesImage = edgesImage;
 	}
 
@@ -159,9 +159,9 @@ public class SobelEdgeDetector {
 	
 	//Lire la luminance de l'image
 	private void readLuminance() {
-		
-		if (type == PixelFormat.RGBA_8888 || type == PixelFormat.RGB_888) {
-			int[] pixels = (int[]) sourceImage.getData().getDataElements(0, 0, width, height, null);
+		Bitmap.CompressFormat type = Bitmap.CompressFormat.valueOf("sourceImage");
+		sourceImage.getPixels(pixels,0,width,0, 0, width, height);
+		if (type == Bitmap.CompressFormat.JPEG) {
 			for (int i = 0; i < picsize; i++) {
 				int p = pixels[i];
 				int r = (p & 0xff0000) >> 16;
@@ -169,7 +169,7 @@ public class SobelEdgeDetector {
 				int b = p & 0xff;
 				data[i] = luminance(r, g, b);
 			}
-		} else if (type == PixelFormat.TYPE_BYTE_GRAY) {
+		} /*else if (type == PixelFormat.TYPE_BYTE_GRAY) {
 			byte[] pixels = (byte[]) sourceImage.getData().getDataElements(0, 0, width, height, null);
 			for (int i = 0; i < picsize; i++) {
 				data[i] = (pixels[i] & 0xff);
@@ -188,7 +188,7 @@ public class SobelEdgeDetector {
                 int r = pixels[offset++] & 0xff;
                 data[i] = luminance(r, g, b);
             }
-        } else {
+        }*/ else {
 			throw new IllegalArgumentException("Unsupported image type: " + type);
 		}
 	}
@@ -221,9 +221,9 @@ public class SobelEdgeDetector {
 	private void writeEdges(int pixels[]) {
 		//Problème au niveau du fichier image, difficile de faire des images en noir et blanc
 		if (edgesImage == null) {
-			edgesImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
+			edgesImage = Bitmap.createBitmap(pixels, width, height, Bitmap.Config.ARGB_8888);
 		}
-		edgesImage.getWritableTile(0, 0).setDataElements(0, 0, width, height, pixels);
+		//edgesImage.getWritableTile(0, 0).setDataElements(0, 0, width, height, pixels);
 		
 		//Transforme l'image rouge en noir et blanc
 		
