@@ -8,5 +8,6 @@
     <string name="title_activity_camera">CameraActivity</string>
     <string name="title_activity_audio_activity_bis">AudioActivityBis</string>
     <string name="title_activity_audio_bis">AudioBis</string>
+    <string name="title_activity_video">VideoActivity</string>
 
 </resources>
