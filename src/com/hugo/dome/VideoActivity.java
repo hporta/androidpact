@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.VideoView;
 
@@ -29,8 +31,24 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 		final SurfaceHolder holder = videoView.getHolder();
 		holder.addCallback(this);
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		
+		start.setOnClickListener(startlistener);
+		record.setOnClickListener(recordlistener);
+		
 	}
-
+OnClickListener startlistener = new View.OnClickListener(){
+	public void onClick(View v){
+		
+	}
+	
+	
+};
+OnClickListener recordlistener = new View.OnClickListener(){
+public void onClick(View v){
+		
+	}
+	
+};
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
