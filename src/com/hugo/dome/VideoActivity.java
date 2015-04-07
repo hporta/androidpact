@@ -3,7 +3,6 @@ package com.hugo.dome;
 import android.support.v7.app.ActionBarActivity;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -12,10 +11,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.VideoView;
 
-public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Callback {
+public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Callback 
+{
 	private MediaRecorder recorder = null;
 	private static final String OUTPUT_FILE = "/sdcard/videorecording.mp4";
-	private static final String Tag ="VideoActivity";
+	private static final String Tag ="VideoCam";
 	private VideoView videoView = null;
 	private Button start= null;
 	private Button record = null;
@@ -23,7 +23,8 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 	private Boolean recording =false;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_video);
 		start = (Button) findViewById(R.id.bgnBtn);
@@ -35,33 +36,69 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 		
 		start.setOnClickListener(new OnClickListener(){
 			public void onClick(View v){
-				if(!VideoActivity.this.recording & !VideoActivity.this.playing){
-					try{
+				if(!VideoActivity.this.recording & !VideoActivity.this.playing)
+				{
+					try
+					{
 						beginRecording(holder);
-						playing = false;
-						recording = true;
+						playing=false;
+						recording=true;
 						start.setBackgroundResource(R.drawable.stop);
-					}catch (Exception e ){
-					Log.e(Tag, e.toString());
-					e.printStackTrace();
+					} catch (Exception e) {
+						Log.e(TAG, e.toString());
+						e.printStackTrace();
 					}
 				}
-				else if(VideoActivity.this.recording){
+				else if(VideoActivity.this.recording)
+				{
 					try
-					
+					{
+						stopRecording();
+						playing=false;
+						recording=false;
+						start.setBackgroundResource(R.drawable.play);
+					}catch (Exception e){
+						Log.e(TAG, e.toString());
+						e.printStackTrace();
+					}
 				}
 			}
 		});
-		record.setOnClickListener(recordlistener);
 		
-	}
-
-OnClickListener recordlistener = new View.OnClickListener(){
-public void onClick(View v){
-		
+		record.setOnClickListener( new OnClickListener() {
+			public void onClick(View v){
+				if(!VideoActivity.this.playing & !VideoActivity.this.recording)
+				{
+					try
+					{
+						playRecording();
+						VideoActivity.this.playing=true;
+						VideoActivity.this.recording=false;
+						record.setBackgroundResource(R.drawable.stop);
+					}catch(Exception e){
+						Log.e(TAG, e.toString());
+						e.printStackTree();
+					}
+				}
+				else if(VideoActivity.this.playing)
+				{
+					try
+					{
+						stopPlayingRecording();
+						VideoActivity.this.playing=false;
+						VideoActivity.this.recording=false;
+						record.setBackgroundResource(R.drawable.play);
+					}catch(Exception e){
+						Log.e(TAG, e.toString());
+						e.printStackTRee();
+					}
+				}
+			}
+			
+		});		
 	}
 	
-};
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
