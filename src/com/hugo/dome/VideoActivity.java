@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
 public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Callback 
@@ -98,6 +99,84 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 		});		
 	}
 	
+	public void surfaceCreated(SurfaceHolder holder)
+	{
+		start.setEnable(true);
+	}
+	
+	public void surfaceDestroyed(SurfaceHolder holder)
+	{
+	}
+	
+	public void surfaceChanged(SurfaceHilder holder, int format, int width, int height)
+	{
+		Log.v(Tag, "Width x Height = " + width + "x" + height);
+	}
+	
+	private void playRecording()
+	{
+		MediaController mc = new MediaController(this);
+		videoView.setMediaController (mc);
+		videoView.setVideoPath(OUTPUT_FILE);
+		videoView.start();
+	}
+	
+	private void stopPlayingRecordingt()
+	{
+		videoView.stopPlayback();
+	}
+	
+	private void stopRecording() throws Exception
+	{
+		if(recorder != null)
+		{
+			recorder.stop();
+		}
+	}
+	
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		if(recorder != null)
+		{
+			recorder.release();
+		}
+	}
+	
+	private void beginRecording(SurfaceHolder holder) throws Exception
+	{
+		if(recoder != null)
+		{
+			recorder.stop();
+			recorder.release();
+		}
+		File outFile = new File(OUTPUT_FILE);
+		if(outFile.exists())
+		{
+			outFile.delete();
+		}
+		try
+		{
+			recorder = new MediaRecorder ();
+			recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+			recorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+			recorder.setVideoSize(/******* VOIR AVEC PATRICK *******/);
+			recorder.setVideoFrameRate(/******* VOIR AVEC PATRICK *******/);
+			recorder.setMaxDuration(/******* VOIR AVEC PATRICK *******/);
+			recorder.setPreviewDisplay(holder.getSurface());
+			recorder.setOutputFile(OUT_FILE);
+			recorder.prepare();
+			recorder.start();
+		}
+		catch(Exception e)
+		{
+			Log.e(Tag, e.toString());
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
