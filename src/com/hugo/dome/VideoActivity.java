@@ -3,6 +3,7 @@ package com.hugo.dome;
 import android.support.v7.app.ActionBarActivity;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -59,7 +60,7 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 						recording=false;
 						start.setBackgroundResource(R.drawable.play);
 					}catch (Exception e){
-						Log.e(TAG, e.toString());
+						Log.e(Tag, e.toString());
 						e.printStackTrace();
 					}
 				}
@@ -77,8 +78,8 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 						VideoActivity.this.recording=false;
 						record.setBackgroundResource(R.drawable.stop);
 					}catch(Exception e){
-						Log.e(TAG, e.toString());
-						e.printStackTree();
+						Log.e(Tag, e.toString());
+						e.printStackTrace();
 					}
 				}
 				else if(VideoActivity.this.playing)
@@ -90,8 +91,8 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 						VideoActivity.this.recording=false;
 						record.setBackgroundResource(R.drawable.play);
 					}catch(Exception e){
-						Log.e(TAG, e.toString());
-						e.printStackTRee();
+						Log.e(Tag, e.toString());
+						e.printStackTrace();
 					}
 				}
 			}
