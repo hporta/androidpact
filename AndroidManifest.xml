@@ -37,9 +37,11 @@
             android:name=".AudioActivity"
             android:label="@string/title_activity_audio" >
         </activity>
-        <service
-            android:name=".CameraActivity">
-        </service>
+        <activity
+            android:name=".CameraActivity"
+            android:label="@string/title_activity_camera"
+            android:screenOrientation="landscape">
+        </activity>
         <activity
             android:name=".AudioBis"
             android:label="@string/title_activity_audio_bis" >

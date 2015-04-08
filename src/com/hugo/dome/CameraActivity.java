@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
@@ -31,10 +32,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 //Notre classe implémente SurfaceHolder.Callback
-public class CameraActivity extends ActionBarActivity {
-	private FileOutputStream out;
+public class CameraActivity extends ActionBarActivity{
+    Button button = null;
+	private FileOutputStream stream;
 	private Bitmap frame;
 	private static final String OUTPUT_FILE="/sdcard/imageoutput.jpg";
 	private Handler myHandler;
@@ -45,19 +48,15 @@ public class CameraActivity extends ActionBarActivity {
 			}
 	};
 	private Preview mPreview;
-	FileOutputStream stream;
-    protected void OnCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Hide the window title.
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        // Create our Preview view and set it as the content of our activity.
+        setContentView(R.layout.activity_camera);
+        button = (Button)findViewById(R.id.takepicture);
+        button.setOnClickListener(photoListener);
         mPreview = new Preview(this);
-        mPreview.setOnClickListener(photoListener);
-        setContentView(mPreview);
-        myHandler = new Handler();
-        myHandler.postDelayed(myRunnable,60000);
+        mPreview.setDrawingCacheEnabled(true);
+        //myHandler = new Handler();
+       // myHandler.postDelayed(myRunnable,60000);
     }
     private OnClickListener photoListener = new OnClickListener(){
     	public void onClick(View v) {
@@ -116,7 +115,7 @@ public class CameraActivity extends ActionBarActivity {
     			}
      
     			// On redémarre la prévisualisation
-    			camera.startPreview();
+    			//camera.startPreview();
     		}
     	}
     };

@@ -54,8 +54,8 @@ public class MainActivity extends ActionBarActivity {
         image.setOnClickListener(imageListener);
         send.setOnClickListener(sendListener);
         mPreview = new Preview(this);
-        myHandler = new Handler();
-        myHandler.postDelayed(myRunnable,60000);
+       // myHandler = new Handler();
+       // myHandler.postDelayed(myRunnable,60000);
         
     }
     private OnClickListener sendListener = new OnClickListener(){
@@ -88,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
     private OnClickListener imageListener = new OnClickListener(){
     	public void onClick(View v){
     		
-    		Intent Activite3 = new Intent(MainActivity.this, VideoActivity.class);
+    		Intent Activite3 = new Intent(MainActivity.this, CameraActivity.class);
     		startActivity(Activite3);
     	}
     };
@@ -161,7 +161,7 @@ public class MainActivity extends ActionBarActivity {
     			}
      
     			// On redémarre la prévisualisation
-    			//camera.startPreview();
+    			camera.startPreview();
     		}
     	}
     };
