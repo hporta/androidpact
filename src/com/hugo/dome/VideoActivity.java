@@ -1,5 +1,7 @@
 package com.hugo.dome;
 
+import java.io.File;
+
 import android.support.v7.app.ActionBarActivity;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -47,7 +49,7 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 						recording=true;
 						start.setBackgroundResource(R.drawable.stop);
 					} catch (Exception e) {
-						Log.e(TAG, e.toString());
+						Log.e(Tag, e.toString());
 						e.printStackTrace();
 					}
 				}
@@ -58,7 +60,7 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 						stopRecording();
 						playing=false;
 						recording=false;
-						start.setBackgroundResource(R.drawable.play);
+						start.setBackgroundResource(R.drawable.start);
 					}catch (Exception e){
 						Log.e(Tag, e.toString());
 						e.printStackTrace();
@@ -89,7 +91,7 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 						stopPlayingRecording();
 						VideoActivity.this.playing=false;
 						VideoActivity.this.recording=false;
-						record.setBackgroundResource(R.drawable.play);
+						record.setBackgroundResource(R.drawable.start);
 					}catch(Exception e){
 						Log.e(Tag, e.toString());
 						e.printStackTrace();
@@ -102,14 +104,14 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 	
 	public void surfaceCreated(SurfaceHolder holder)
 	{
-		start.setEnable(true);
+		start.setEnabled(true);
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder)
 	{
 	}
 	
-	public void surfaceChanged(SurfaceHilder holder, int format, int width, int height)
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
 	{
 		Log.v(Tag, "Width x Height = " + width + "x" + height);
 	}
@@ -122,7 +124,7 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 		videoView.start();
 	}
 	
-	private void stopPlayingRecordingt()
+	private void stopPlayingRecording()
 	{
 		videoView.stopPlayback();
 	}
@@ -146,7 +148,7 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 	
 	private void beginRecording(SurfaceHolder holder) throws Exception
 	{
-		if(recoder != null)
+		if(recorder != null)
 		{
 			recorder.stop();
 			recorder.release();
@@ -164,11 +166,11 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
 			recorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-			recorder.setVideoSize(/******* VOIR AVEC PATRICK *******/);
-			recorder.setVideoFrameRate(/******* VOIR AVEC PATRICK *******/);
-			recorder.setMaxDuration(/******* VOIR AVEC PATRICK *******/);
+			recorder.setVideoSize(320, 240);
+			recorder.setVideoFrameRate(15);
+			recorder.setMaxDuration(200000);
 			recorder.setPreviewDisplay(holder.getSurface());
-			recorder.setOutputFile(OUT_FILE);
+			recorder.setOutputFile(OUTPUT_FILE);
 			recorder.prepare();
 			recorder.start();
 		}

@@ -11,6 +11,7 @@ import java.util.Date;
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
+import android.app.IntentService;
 import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,7 +33,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 //Notre classe implémente SurfaceHolder.Callback
-public class CameraActivity extends Activity {
+public class CameraActivity extends ActionBarActivity {
 	private FileOutputStream out;
 	private Bitmap frame;
 	private static final String OUTPUT_FILE="/sdcard/imageoutput.jpg";
@@ -45,8 +46,7 @@ public class CameraActivity extends Activity {
 	};
 	private Preview mPreview;
 	FileOutputStream stream;
-    @Override
-	protected void onCreate(Bundle savedInstanceState) {
+    protected void OnCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Hide the window title.
@@ -56,8 +56,8 @@ public class CameraActivity extends Activity {
         mPreview = new Preview(this);
         mPreview.setOnClickListener(photoListener);
         setContentView(mPreview);
-        /*myHandler = new Handler();
-        myHandler.postDelayed(myRunnable,60000);*/
+        myHandler = new Handler();
+        myHandler.postDelayed(myRunnable,60000);
     }
     private OnClickListener photoListener = new OnClickListener(){
     	public void onClick(View v) {
