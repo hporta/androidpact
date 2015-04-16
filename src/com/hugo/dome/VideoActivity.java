@@ -168,7 +168,7 @@ public class VideoActivity extends ActionBarActivity implements SurfaceHolder.Ca
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			recorder.setVideoSize(320, 240);
 			recorder.setVideoFrameRate(15);
-			recorder.setMaxDuration(200000);
+			recorder.setMaxDuration(20000);
 			recorder.setPreviewDisplay(holder.getSurface());
 			recorder.setOutputFile(OUTPUT_FILE);
 			recorder.prepare();
