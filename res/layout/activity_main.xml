@@ -14,27 +14,33 @@
         android:text="Bienvenue sur le système embarqué de DOME" 
         android:layout_gravity="center"
         android:paddingBottom="60dp"/>
+      <SurfaceView
+        android:layout_width="200dip"
+        android:layout_height="200dip"
+        android:id="@+id/surfaceview" />
+      <Button
+          android:id="@+id/test"
+          android:layout_gravity="center_horizontal"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
       <Button
           android:id="@+id/audio"
           android:layout_gravity="center_horizontal"
           android:layout_width="120dp"
           android:layout_height="120dp"
           android:background="@drawable/logodome"/>
-      <Button 
-          android:id="@+id/image"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Analyse de la table"
-          android:layout_gravity="center"
-          android:gravity="center_vertical"/>
-      
-      <Button 
-          android:id="@+id/send"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Send"
-          android:layout_gravity="center"
-          android:gravity="center_vertical"/>
-      
-    
+      <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Start"
+                android:text="Start"
+                android:layout_gravity="center"/>
+                
+                <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Stop"
+                android:text="Stop"
+                android:layout_gravity="center"/>
 </LinearLayout>
