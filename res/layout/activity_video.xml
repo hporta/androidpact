@@ -9,12 +9,12 @@
     tools:context="com.hugo.dome.VideoActivity" >
     
     <RelativeLayout android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:id="@+id/relativeVideoLayoutView"
         android:layout_centerInParent="true">
         <VideoView  android:id="@+id/videoView"
-            android:layout_width="174px"
-            android:layout_height="144px"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
@@ -24,13 +24,13 @@
     android:orientation="horizontal"
     android:layout_centerHorizontal="true"
     android:layout_below="@+id/relativeVideoLayoutView">
-        <ImageButton 
+        <Button 
             android:id="@+id/playRecordingBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/start"
             />
-        <ImageButton android:id="@+id/bgnBtn"
+        <Button android:id="@+id/bgnBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/record"

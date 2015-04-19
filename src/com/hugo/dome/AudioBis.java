@@ -1,15 +1,12 @@
 package com.hugo.dome;
 
 import java.io.File;
-import WavFile.*;
 
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import mainAudio.RealCarte;
 import android.support.v7.app.ActionBarActivity;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -35,7 +32,6 @@ public class AudioBis extends ActionBarActivity {
      private int bufferSize = 0;
      private Thread recordingThread = null;
      private boolean isRecording = false;
-     private RealCarte carte = null;
      private String produit = null;
      private String Path ="/mnt/sdcard/AudioRecorder/audio.wav" ;
      Button start = null;
@@ -53,12 +49,6 @@ public class AudioBis extends ActionBarActivity {
 	        bufferSize = AudioRecord.getMinBufferSize(8000,
 	                AudioFormat.CHANNEL_CONFIGURATION_MONO,
 	                AudioFormat.ENCODING_PCM_16BIT);
-	        try {
-	        	carte = new RealCarte();
-	        	carte.fill();
-	        } catch(Exception e) {
-	        	e.printStackTrace();
-	        }
 	    }
 
 	       
@@ -276,8 +266,7 @@ public class AudioBis extends ActionBarActivity {
                 @Override
                 public void onClick(View v){
 	                                        stopRecording(); 
-	                                        produit = carte.recognize(Path);
-	                                        Thread thread = new Thread(new Runnable(){
+	                                       /* Thread thread = new Thread(new Runnable(){
 	                                    		@Override
 	                                    		public void run()
 	                                    		{
@@ -292,7 +281,7 @@ public class AudioBis extends ActionBarActivity {
 	                                    		}
 	                                    		
 	                                    	});
-	                                        thread.start();
+	                                        thread.start();*/
 	                                        
 	                                        
 	                }
