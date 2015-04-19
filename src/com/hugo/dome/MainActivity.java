@@ -15,6 +15,7 @@ import java.util.Date;
 
 
 
+
 import android.support.v7.app.ActionBarActivity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -52,25 +53,36 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 	private Parameters parameters; 
 	private FileOutputStream stream;
 	private static final String OUTPUT_FILE="/sdcard/imageoutput.jpg";
-	private Handler myHandler;
 	private Thread thread = new Thread( new Runnable(){
-		public void run() {
-			if(sv!=null){
-				SavePicture();
-			}
+		public void run() {while(true){
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			threadbis.start();
-			myHandler.postDelayed(this,60000);
+			
+			if(sv!=null){
+				SavePicture();
+			}
+			try {
+				Thread.sleep(50000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}}
+			
 		}
 	});
 	private Thread threadbis = new Thread(new Runnable(){
-		public void run() {
+		public void run() {while(true){
 			if(VV!=null){
+				try {
+					Thread.sleep(20000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				try {
 					beginRecording(hHolder);
 				} catch (Exception e) {
@@ -90,6 +102,14 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 					e.printStackTrace();
 				}
 			}
+			
+			try {
+				Thread.sleep(30000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+		}
 		}
 	});
 	/*try {
@@ -114,12 +134,12 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 		sHolder = sv.getHolder();  
 		sHolder.addCallback(this);   
 		sHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		myHandler = new Handler();
-		myHandler.postDelayed(thread,60000);
 		VV= (VideoView) findViewById(R.id.videoView);
 		hHolder = VV.getHolder();
 		hHolder.addCallback(new VideoCallback());
 		hHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		thread.start();
+		threadbis.start();
 	}
 
 
@@ -208,11 +228,13 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 			mCamera.release();
 			mCamera =null;}
 	}
-	public void onPause() {
+	/*public void onPause() {
 		super.onPause();
 		if(myHandler != null)
-			myHandler.removeCallbacks(thread); // On arrete le callback
-	}
+			myHandler.removeCallbacks(thread);
+		if(myHandlerbis != null)
+			myHandlerbis.removeCallbacks(threadbis);// On arrete le callback
+	}*/
 
 	private void stopRecording() throws Exception
 	{
@@ -234,9 +256,10 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 
 	private void beginRecording(SurfaceHolder holder) throws Exception
 	{
+		if(mCamera!=null){
 		mCamera.stopPreview();
 		mCamera.release();
-		mCamera =null;
+		mCamera =null;}
 		if(recorder != null)
 		{
 			recorder.stop();
