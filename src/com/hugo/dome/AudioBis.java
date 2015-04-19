@@ -254,7 +254,7 @@ public class AudioBis extends ActionBarActivity {
 	                out.write(header, 0, 44);
 	        }
 	        
-	        OnClickListener startListener = new View.OnClickListener() {
+	       private OnClickListener startListener = new View.OnClickListener() {
 	                @Override
 	                public void onClick(View v) {
 	                        
@@ -262,26 +262,11 @@ public class AudioBis extends ActionBarActivity {
 	                                        startRecording();
 	                                }
 	        };
-	        OnClickListener stopListener = new View.OnClickListener() {
+	        private OnClickListener stopListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
 	                                        stopRecording(); 
-	                                       /* Thread thread = new Thread(new Runnable(){
-	                                    		@Override
-	                                    		public void run()
-	                                    		{
-	                                    			try {
-	                                    				Client.commande(produit);
-	                                    			}
-	                                    			
-	                                    			catch(Exception e)
-	                                    			{
-	                                    				e.printStackTrace();
-	                                    			}
-	                                    		}
-	                                    		
-	                                    	});
-	                                        thread.start();*/
+	                                       
 	                                        
 	                                        
 	                }

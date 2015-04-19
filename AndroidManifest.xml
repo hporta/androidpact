@@ -33,15 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AudioActivity"
-            android:label="@string/title_activity_audio" >
-        </activity>
-        <activity
-            android:name=".CameraActivity"
-            android:label="@string/title_activity_camera"
-            android:screenOrientation="landscape" >
-        </activity>
+        
         <activity
             android:name=".AudioBis"
             android:label="@string/title_activity_audio_bis" >
@@ -61,3 +53,5 @@
     </application>
 
 </manifest>
+
+

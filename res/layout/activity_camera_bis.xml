@@ -8,16 +8,28 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.hugo.dome.CameraBis" 
     android:orientation="vertical">
-
+          <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bienvenue sur le système embarqué de DOME" 
+        android:layout_gravity="center"/>
     <SurfaceView
-        android:layout_width="200dip"
-        android:layout_height="200dip"
+        android:layout_width="200px"
+        android:layout_height="200px"
         android:id="@+id/surfaceview" />
-    <Button android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/takepicture"
-                android:text="Take"
-                android:layout_gravity="center"/>
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="300px"
+        android:src="@drawable/affichecarte" 
+        android:layout_gravity="center_horizontal">
+        </ImageView>
+    
+    
+    <Button  android:id="@+id/audio"
+          android:layout_gravity="center_horizontal"
+          android:layout_width="120dp"
+          android:layout_height="120dp"
+          android:background="@drawable/logodome"/>
 
     
 

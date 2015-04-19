@@ -21,6 +21,7 @@ public class VideoCallback implements SurfaceHolder.Callback{
 		/*mCamera.stopPreview();
 		mCamera.release();
 		mCamera =null;*/
+		
 	}
 	
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)

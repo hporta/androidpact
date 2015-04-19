@@ -3,14 +3,13 @@ package com.hugo.dome;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
-
 import android.support.v7.app.ActionBarActivity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore.MediaColumns;
 import android.provider.MediaStore.Images.Media;
 import android.view.Menu;
@@ -22,46 +21,58 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callback {
-	Button button = null;
+	Button audio = null;
 	private SurfaceView sv;
 	private SurfaceHolder sHolder;   
 	private Camera mCamera;    
 	private Parameters parameters; 
 	private FileOutputStream stream;
 	private static final String OUTPUT_FILE="/sdcard/imageoutput.jpg";
-	private Handler myHandler;
-	private Runnable myRunnable = new Runnable(){
+	private Thread threadbis = new Thread(new Runnable(){
 		public void run() {
-			//photoListener.onClick(button);
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			if(sv!=null){
-				SavePicture();	  		
-				myHandler.postDelayed(this,60000);
+				SavePicture();
 			}
+			try {
+				Thread.sleep(50000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		};
+			Intent Activite2 = new Intent(CameraBis.this, MainActivity.class);
+			startActivity(Activite2);
+			}
+		});
+	
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_camera_bis); 
-			sv = (SurfaceView) findViewById(R.id.surfaceview);  
-			button = (Button)findViewById(R.id.takepicture);
-			button.setOnClickListener(photoListener);
+			sv = (SurfaceView) findViewById(R.id.surfaceview); 
+			audio = (Button)findViewById(R.id.audio);
+			audio.setOnClickListener(audioListener);
 			sHolder = sv.getHolder();  
 			sHolder.addCallback(this);   
 			sHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-			myHandler = new Handler();
-			myHandler.postDelayed(myRunnable,60000);
+			threadbis.start();
 		}
-		private OnClickListener photoListener = new OnClickListener(){
-			public void onClick(View v) {
-				// On prend une photo
-				if (sv!= null) {
-					SavePicture();
-				}
-
+		private OnClickListener audioListener = new OnClickListener(){
+			public void onClick(View v){
+				Intent Activite3 = new Intent(CameraBis.this, AudioBis.class);
+				startActivity(Activite3);
 			}
 		};
+
+			
+		
 		private void SavePicture() {
 			try {
 				//SimpleDateFormat timeStampFormat = new SimpleDateFormat(
@@ -146,12 +157,7 @@ public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callba
 			mCamera.release();
 			mCamera =null;
 		}
-		public void onPause() {
-    super.onPause();
-    if(myHandler != null)
-        myHandler.removeCallbacks(myRunnable); // On arrete le callback
-}
-
+		
 }
 
 

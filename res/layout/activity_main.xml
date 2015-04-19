@@ -13,23 +13,19 @@
         android:layout_height="wrap_content"
         android:text="Bienvenue sur le système embarqué de DOME" 
         android:layout_gravity="center"/>
-      <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+      <RelativeLayout
+        android:layout_width="200px"
+        android:layout_height="200px"
         android:id="@+id/relativeVideoLayoutView"
         android:layout_centerInParent="true"
         android:orientation="horizontal">
-      <SurfaceView
-        android:layout_width="100px"
-        android:layout_height="100px"
-        android:id="@+id/surfaceview" />
        <VideoView  android:id="@+id/videoView"
-            android:layout_width="100px"
-            android:layout_height="100px"/>
-       </LinearLayout>
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
+       </RelativeLayout>
        <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="400px"
+        android:layout_height="300px"
         android:src="@drawable/affichecarte" 
         android:layout_gravity="center_horizontal">
         </ImageView>
