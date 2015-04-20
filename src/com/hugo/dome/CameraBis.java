@@ -3,6 +3,7 @@ package com.hugo.dome;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+
 import android.support.v7.app.ActionBarActivity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -28,6 +29,7 @@ public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callba
 	private Parameters parameters; 
 	private FileOutputStream stream;
 	private static final String OUTPUT_FILE="/sdcard/imageoutput.jpg";
+	//Thread principale pour l'action du système embarqué
 	private Thread threadbis = new Thread(new Runnable(){
 		public void run() {
 			try {
@@ -75,11 +77,7 @@ public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callba
 		
 		private void SavePicture() {
 			try {
-				//SimpleDateFormat timeStampFormat = new SimpleDateFormat(
-				//"yyyy-MM-dd-HH.mm.ss");
 				String fileName = "imageoutput.jpg";
-				/*"photo_" + timeStampFormat.format(new Date())
-        				+ ".jpeg";*/
 
 				// Metadata pour la photo
 				ContentValues values = new ContentValues();
@@ -111,7 +109,7 @@ public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callba
 
 			public void onPictureTaken(byte[] data, Camera camera) {
 				if (data != null) {
-					// Enregistrement de votre image
+					// Enregistrement de l'image
 					try {
 						if (stream != null) {
 							stream.write(data);
@@ -122,15 +120,12 @@ public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callba
 						// TODO: handle exception
 						e.printStackTrace();
 					}
-
-					// On redémarre la prévisualisation
-					//mPreview.setVisibility(View.VISIBLE);
 				}
 			}
 		};
 		public void surfaceCreated(SurfaceHolder holder) {
-			// The Surface has been created, acquire the camera and tell it where
-			// to draw.
+			// La surface est crée, elle a accés à la caméra et est redirigé à l'endroit où
+			// dessiner
 			mCamera = Camera.open();
 			try {
 				mCamera.setPreviewDisplay(holder);
@@ -141,8 +136,7 @@ public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callba
 			}
 		}
 		public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-			// Now that the size is known, set up the camera parameters and begin
-			// the preview.
+			// Une fois que la taille est connu, il faut changer les paramètres de la caméra puis démarre la prévisualisation
 			Camera.Parameters parameters = mCamera.getParameters();
 			parameters.setPreviewSize(w, h);
 			mCamera.setParameters(parameters);
@@ -150,9 +144,7 @@ public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callba
 		}
 
 		public void surfaceDestroyed(SurfaceHolder holder) {
-			// Surface will be destroyed when we return, so stop the preview.
-			// Because the CameraDevice object is not a shared resource, it's very
-			// important to release it when the activity is paused.
+			// La surface est détruit bien faireattention à libérer la caméra pour l'autre activité
 			mCamera.stopPreview();
 			mCamera.release();
 			mCamera =null;

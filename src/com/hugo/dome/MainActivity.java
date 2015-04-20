@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+
 import android.support.v7.app.ActionBarActivity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 
@@ -39,7 +41,8 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 	private static final String OUTPUT2_FILE = "/sdcard/videorecording.mp4";
 	private static final String Tag ="VideoCam";
 	Button audio = null;
-	
+	private TextView texte;
+	//Thread principale pour l'action du système embarqué
 	private Thread threadbis = new Thread(new Runnable(){
 		public void run() {
 			try {
@@ -49,6 +52,11 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 				e1.printStackTrace();
 			}
 			if(VV!=null){
+				  runOnUiThread(new Runnable() {
+				        public void run() {
+				          texte.setText("Ne pas touché au bouton audio");
+				        }
+				      });
 				try {
 					beginRecording(hHolder);
 				} catch (Exception e) {
@@ -67,6 +75,11 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				runOnUiThread(new Runnable() {
+			        public void run() {
+			          texte.setText("Bienvenue sur le système embarqué de DOME");
+			        }
+			      });
 			}
 			try {
 				Thread.sleep(40000);
@@ -86,6 +99,7 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		texte = (TextView)findViewById(R.id.texte);
 		audio = (Button)findViewById(R.id.audio);
 		audio.setOnClickListener(audioListener);
 		VV= (VideoView) findViewById(R.id.videoView);
@@ -107,31 +121,17 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 	};
 	public void surfaceCreated(SurfaceHolder holder)
 	{
-		/*mCamera = Camera.open();
-		try {
-			mCamera.setPreviewDisplay(holder);
-		} catch (IOException exception) {
-			mCamera.release();
-			mCamera = null;
-			// TODO: add more exception handling logic here
-		}*/
 	}
 	
 	public void surfaceDestroyed(SurfaceHolder holder)
 	{
-		/*mCamera.stopPreview();
-		mCamera.release();
-		mCamera =null;*/
 		
 	}
 	
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
 	{
 		Log.v("VideoCam", "Width x Height = " + width + "x" + height);
-					/*Camera.Parameters parameters = mCamera.getParameters();
-					parameters.setPreviewSize(width, height);
-					mCamera.setParameters(parameters);
-					mCamera.startPreview();*/
+			
 	}
 
 	private void stopRecording() throws Exception
@@ -144,7 +144,7 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 	}
 
 	protected void onDestroy()
-	{
+	{//méthode si jamais l'appli est détruite la caméra est libérée
 		super.onDestroy();
 		if(recorder != null)
 		{
@@ -167,6 +167,7 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 		}
 		try
 		{
+			//instanciation du recorder
 			recorder = new MediaRecorder ();
 			recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);

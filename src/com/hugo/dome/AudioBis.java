@@ -64,7 +64,6 @@ public class AudioBis extends ActionBarActivity {
 	                if(!file.exists()){
 	                        file.mkdirs();
 	                }
-	                //Path = file.getAbsolutePath() + "/" + AUDIO_RECORDER_FILE_EXT_WAV;
 	                return (file.getAbsolutePath() + "/" + "audio" + AUDIO_RECORDER_FILE_EXT_WAV);
 	                
 	        }
@@ -105,7 +104,7 @@ public class AudioBis extends ActionBarActivity {
 	                
 	                recordingThread.start();
 	        }
-	        
+	        //transcription des data dans un buffer
 	        private void writeAudioDataToFile(){
 	                byte data[] = new byte[bufferSize];
 	                String filename = getTempFilename();
@@ -163,7 +162,7 @@ public class AudioBis extends ActionBarActivity {
 	                
 	                file.delete();
 	        }
-	        
+	        //enregistrement du wav file
 	        private void copyWaveFile(String inFilename,String outFilename){
 	                FileInputStream in = null;
 	                FileOutputStream out = null;
