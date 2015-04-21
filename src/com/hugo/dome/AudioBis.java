@@ -265,9 +265,20 @@ public class AudioBis extends ActionBarActivity {
                 @Override
                 public void onClick(View v){
 	                                        stopRecording(); 
-	                                       
+	                   new Thread(new Runnable()
+	                		   {
+	                	   public void run(){
+	                		   try {
+								Client3.Commande2();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	                	   }
+	                	   
+	                   }).start();
 	                                        
-	                                        
+                      
 	                }
 	        }; 
 	

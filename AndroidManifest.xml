@@ -25,6 +25,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
+            android:finishOnTaskLaunch="true"
             android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
@@ -43,6 +44,7 @@
             android:label="@string/title_activity_video" >
         </activity>
         <activity
+            android:finishOnTaskLaunch="true"
             android:name=".CameraBis"
             android:label="@string/title_activity_camera_bis" >
         </activity>

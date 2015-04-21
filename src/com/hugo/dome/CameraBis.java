@@ -20,9 +20,11 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callback {
 	Button audio = null;
+	private TextView texte;
 	private SurfaceView sv;
 	private SurfaceHolder sHolder;   
 	private Camera mCamera;    
@@ -42,22 +44,42 @@ public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callba
 			if(sv!=null){
 				SavePicture();
 			}
+			try{
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			runOnUiThread(new Runnable() {
+		        public void run() {
+		          texte.setText("Vous pouvez commander pendant une minute");
+		        }
+		      });
 			try {
-				Thread.sleep(50000);
+				Client2.Commande2();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				Thread.sleep(60000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Intent Activite2 = new Intent(CameraBis.this, MainActivity.class);
 			startActivity(Activite2);
+			finish();
 			}
+		
 		});
 	
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.activity_camera_bis); 
+			setContentView(R.layout.activity_camera_bis);
+			texte = (TextView) findViewById(R.id.texte);
 			sv = (SurfaceView) findViewById(R.id.surfaceview); 
 			audio = (Button)findViewById(R.id.audio);
 			audio.setOnClickListener(audioListener);
@@ -68,6 +90,12 @@ public class CameraBis extends ActionBarActivity implements SurfaceHolder.Callba
 		}
 		private OnClickListener audioListener = new OnClickListener(){
 			public void onClick(View v){
+				try {
+					threadbis.sleep(120000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Intent Activite3 = new Intent(CameraBis.this, AudioBis.class);
 				startActivity(Activite3);
 			}

@@ -42,6 +42,7 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 	private static final String Tag ="VideoCam";
 	Button audio = null;
 	private TextView texte;
+	private boolean ss=true;
 	//Thread principale pour l'action du système embarqué
 	private Thread threadbis = new Thread(new Runnable(){
 		public void run() {
@@ -52,11 +53,7 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 				e1.printStackTrace();
 			}
 			if(VV!=null){
-				  runOnUiThread(new Runnable() {
-				        public void run() {
-				          texte.setText("Ne pas touché au bouton audio");
-				        }
-				      });
+				  
 				try {
 					beginRecording(hHolder);
 				} catch (Exception e) {
@@ -77,20 +74,27 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 				}
 				runOnUiThread(new Runnable() {
 			        public void run() {
-			          texte.setText("Bienvenue sur le système embarqué de DOME");
+			          texte.setText("Vous pouvez commander pendant une minute");
 			        }
 			      });
 			}
 			try {
-				Thread.sleep(40000);
+				Client.Commande2();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				Thread.sleep(120000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
+			
 			Intent Activite2 = new Intent(MainActivity.this, CameraBis.class);
 			startActivity(Activite2);
-		
+		finish();
 		}
 		
 	});
@@ -107,7 +111,10 @@ public class MainActivity extends ActionBarActivity implements SurfaceHolder.Cal
 		hHolder.addCallback(this);
 		hHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		threadbis.start();
-	}
+	
+		}
+	
+	
 
 
 
